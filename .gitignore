@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Build output (Vite)
+dist/
+dist-ssr/
+
+# Vite / TypeScript caches
+.vite/
+*.tsbuildinfo
+node_modules/.tmp/
+
+# Vercel
+.vercel/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Local overrides
+*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Editor / OS junk
+.vscode/*
+
+# Other
+IMG_TEST/

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/yt/piano",
+      "destination": "https://www.youtube.com/feeds/videos.xml?channel_id=UCmncKPi1va_EZjZn7jxTkww"
+    },
+    {
+      "source": "/yt/guitar",
+      "destination": "https://www.youtube.com/feeds/videos.xml?channel_id=UC9B1dEDMtChG83NeaT2wm9Q"
+    }
+  ]
+}
