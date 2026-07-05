@@ -281,6 +281,52 @@ svg {
   transform: translateY(0);
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  justify-self: end;
+  gap: 0.9rem;
+}
+
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.2rem;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.lang-option {
+  padding: 0.3rem 0.5rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+  transition:
+    color 160ms ease,
+    background 160ms ease;
+}
+
+.lang-option:hover {
+  color: var(--text);
+}
+
+.lang-option--active {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lang-switcher--mobile {
+  display: none;
+}
+
 .section-frame {
   width: min(calc(100% - (var(--side) * 2)), var(--container));
   margin: 0 auto;
@@ -1014,6 +1060,15 @@ svg {
 
   .menu-toggle {
     display: block;
+  }
+
+  .lang-switcher--desktop {
+    display: none;
+  }
+
+  .lang-switcher--mobile {
+    display: inline-flex;
+    margin-top: 1.6rem;
   }
 
   .mobile-menu {

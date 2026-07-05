@@ -1,6 +1,7 @@
 import type { MouseEvent as ReactMouseEvent, SyntheticEvent } from "react";
 import { ArrowRight, PlayIcon } from "./Icons";
 import { useYouTubeFeeds, videoUrl, youTubeThumb, type YtVideo } from "../lib/youtube";
+import { useI18n } from "../i18n";
 
 // Used only if the live feeds can't be reached, so the section is never empty.
 const fallbackVideos: YtVideo[] = [
@@ -25,6 +26,7 @@ type LatestContentProps = {
 
 export default function LatestContent({ onPlay, onViewAll }: LatestContentProps) {
   const { videos, loading, error } = useYouTubeFeeds();
+  const { t } = useI18n();
 
   const handleViewAll = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
@@ -37,11 +39,11 @@ export default function LatestContent({ onPlay, onViewAll }: LatestContentProps)
     <section className="latest-section section-frame" id="music">
       <div className="section-heading">
         <div className="section-heading__left">
-          <h2>Latest content</h2>
+          <h2>{t.latest.heading}</h2>
           <span aria-hidden="true" />
         </div>
         <a className="view-all-link" href="#follow" onClick={handleViewAll}>
-          Vedi tutto
+          {t.latest.viewAll}
           <ArrowRight className="view-all-icon" />
         </a>
       </div>
@@ -71,18 +73,18 @@ export default function LatestContent({ onPlay, onViewAll }: LatestContentProps)
                   <img
                     className="content-thumb__img"
                     src={item.thumbnail}
-                    alt={item.title}
+                    alt={item.title || t.common.untitled}
                     loading="lazy"
                     onError={handleThumbError}
                   />
-                  <span className="content-badge" aria-label="Video">
+                  <span className="content-badge" aria-label={t.latest.videoBadge}>
                     <PlayIcon />
                   </span>
                 </div>
                 <div className="content-card__body">
-                  <p>{item.channel} Cover</p>
-                  <h3>{item.title}</h3>
-                  <span>YouTube</span>
+                  <p>{t.latest.cover(t.instruments[item.channel])}</p>
+                  <h3>{item.title || t.common.untitled}</h3>
+                  <span>{t.latest.youtube}</span>
                 </div>
               </a>
             ))}

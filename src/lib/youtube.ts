@@ -94,7 +94,7 @@ function parseFeed(xml: string, channel: Channel): YtVideo[] {
       const id = idNode.trim();
       if (!id) return null;
 
-      const title = entry.getElementsByTagName("title")[0]?.textContent ?? "Senza titolo";
+      const title = entry.getElementsByTagName("title")[0]?.textContent ?? "";
       const published = entry.getElementsByTagName("published")[0]?.textContent ?? "";
 
       return {

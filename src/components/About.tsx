@@ -1,45 +1,46 @@
 import { GuitarIcon, LightningIcon, PianoIcon, VideoIcon } from "./Icons";
 import type { GalleryFilter } from "../lib/youtube";
+import { useI18n } from "../i18n";
 
 type AboutProps = {
   onOpenGallery: (filter?: GalleryFilter) => void;
 };
 
-const skillItems: { label: string; Icon: typeof GuitarIcon; filter: GalleryFilter }[] = [
-  { label: "Guitar", Icon: GuitarIcon, filter: "Guitar" },
-  { label: "Piano", Icon: PianoIcon, filter: "Piano" },
-  { label: "Tips & Tricks", Icon: LightningIcon, filter: "Tutti" },
-  { label: "Video & Cover", Icon: VideoIcon, filter: "Tutti" },
+type SkillKey = "guitar" | "piano" | "tips" | "videos";
+
+const skillItems: { key: SkillKey; Icon: typeof GuitarIcon; filter: GalleryFilter }[] = [
+  { key: "guitar", Icon: GuitarIcon, filter: "Guitar" },
+  { key: "piano", Icon: PianoIcon, filter: "Piano" },
+  { key: "tips", Icon: LightningIcon, filter: "Tutti" },
+  { key: "videos", Icon: VideoIcon, filter: "Tutti" },
 ];
 
 export default function About({ onOpenGallery }: AboutProps) {
+  const { t } = useI18n();
+
   return (
     <section className="about-section" id="about">
       <div className="about-card">
-        <div className="about-photo" aria-label="Ritratto in bianco e nero" />
+        <div className="about-photo" aria-label={t.about.portrait} />
 
         <div className="about-copy">
-          <h2 className="section-title">Chi sono</h2>
-          <p>
-            Ciao! Sono un musicista e content creator. Suono chitarra classica,
-            elettrica e pianoforte e condivido cover, consigli e contenuti per
-            altri appassionati di musica.
-          </p>
+          <h2 className="section-title">{t.about.title}</h2>
+          <p>{t.about.bio}</p>
         </div>
 
-        <div className="skills-list" aria-label="Categorie contenuti">
-          {skillItems.map(({ label, Icon, filter }) => (
+        <div className="skills-list" aria-label={t.about.categories}>
+          {skillItems.map(({ key, Icon, filter }) => (
             <a
               className="skill-item"
               href="#gallery"
-              key={label}
+              key={key}
               onClick={(event) => {
                 event.preventDefault();
                 onOpenGallery(filter);
               }}
             >
               <Icon className="skill-icon" />
-              <span>{label}</span>
+              <span>{t.about.skills[key]}</span>
             </a>
           ))}
         </div>

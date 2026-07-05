@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { LogoMark } from "./Icons";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useI18n } from "../i18n";
+
+type NavKey = "home" | "about" | "music" | "gallery" | "contact";
 
 type NavItem = {
-  label: string;
+  key: NavKey;
   href: string;
   gallery?: boolean;
 };
 
 const navItems: NavItem[] = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Music", href: "#music" },
-  { label: "Gallery", href: "#gallery", gallery: true },
-  { label: "Contact", href: "mailto:memoleecontact@gmail.com" },
+  { key: "home", href: "#home" },
+  { key: "about", href: "#about" },
+  { key: "music", href: "#music" },
+  { key: "gallery", href: "#gallery", gallery: true },
+  { key: "contact", href: "mailto:memoleecontact@gmail.com" },
 ];
 
 type HeaderProps = {
@@ -21,19 +25,20 @@ type HeaderProps = {
 
 export default function Header({ onOpenGallery }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useI18n();
 
   return (
     <header className="site-header">
-      <a className="logo-link" href="#home" aria-label="Memolee home">
+      <a className="logo-link" href="#home" aria-label={t.header.logoHome}>
         <LogoMark className="logo-mark" />
       </a>
 
-      <nav className="desktop-nav" aria-label="Navigazione principale">
-        {navItems.map(({ label, href, gallery }) => (
+      <nav className="desktop-nav" aria-label={t.header.primaryNav}>
+        {navItems.map(({ key, href, gallery }) => (
           <a
-            className={label === "Home" ? "nav-link nav-link--active" : "nav-link"}
+            className={key === "home" ? "nav-link nav-link--active" : "nav-link"}
             href={href}
-            key={label}
+            key={key}
             onClick={
               gallery
                 ? (event) => {
@@ -43,30 +48,34 @@ export default function Header({ onOpenGallery }: HeaderProps) {
                 : undefined
             }
           >
-            {label}
+            {t.header.nav[key]}
           </a>
         ))}
       </nav>
 
-      <button
-        className={menuOpen ? "menu-toggle menu-toggle--open" : "menu-toggle"}
-        type="button"
-        aria-expanded={menuOpen}
-        aria-controls="mobile-menu"
-        aria-label="Apri menu"
-        onClick={() => setMenuOpen((current) => !current)}
-      >
-        <span />
-        <span />
-      </button>
+      <div className="header-actions">
+        <LanguageSwitcher className="lang-switcher--desktop" />
+
+        <button
+          className={menuOpen ? "menu-toggle menu-toggle--open" : "menu-toggle"}
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          aria-label={t.header.openMenu}
+          onClick={() => setMenuOpen((current) => !current)}
+        >
+          <span />
+          <span />
+        </button>
+      </div>
 
       <div className={menuOpen ? "mobile-menu mobile-menu--open" : "mobile-menu"} id="mobile-menu">
-        <nav aria-label="Navigazione mobile">
-          {navItems.map(({ label, href, gallery }) => (
+        <nav aria-label={t.header.mobileNav}>
+          {navItems.map(({ key, href, gallery }) => (
             <a
-              className={label === "Home" ? "mobile-nav-link mobile-nav-link--active" : "mobile-nav-link"}
+              className={key === "home" ? "mobile-nav-link mobile-nav-link--active" : "mobile-nav-link"}
               href={href}
-              key={label}
+              key={key}
               onClick={(event) => {
                 if (gallery) {
                   event.preventDefault();
@@ -75,10 +84,11 @@ export default function Header({ onOpenGallery }: HeaderProps) {
                 setMenuOpen(false);
               }}
             >
-              {label}
+              {t.header.nav[key]}
             </a>
           ))}
         </nav>
+        <LanguageSwitcher className="lang-switcher--mobile" />
       </div>
     </header>
   );

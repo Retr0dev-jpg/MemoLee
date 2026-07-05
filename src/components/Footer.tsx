@@ -1,17 +1,21 @@
+import { useI18n } from "../i18n";
+
 export default function Footer() {
+  const { t } = useI18n();
+
   return (
     <footer className="site-footer">
       <p>
-        La musica è il mio linguaggio.
+        {t.footer.quote1}
         <br />
-        Ogni nota, la mia storia.
+        {t.footer.quote2}
       </p>
       <p className="site-footer__credit">
-        Sito progettato e creato da{" "}
+        {t.footer.credit}{" "}
         <a href="https://retr0hub.dev/" target="_blank" rel="noopener noreferrer">
           Retr0_
         </a>{" "}
-        per Memolee
+        {t.footer.creditFor} Memolee
       </p>
     </footer>
   );

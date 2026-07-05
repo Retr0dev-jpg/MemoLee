@@ -10,6 +10,7 @@ import {
   YouTubeIcon,
 } from "./Icons";
 import { focusSocials } from "../lib/focusSocials";
+import { useI18n } from "../i18n";
 
 type IconType = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -50,6 +51,7 @@ const socialLinks: SocialLink[] = [
 export default function Hero() {
   const [openCard, setOpenCard] = useState<string | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const { t } = useI18n();
 
   useEffect(() => {
     if (!openCard) return;
@@ -74,17 +76,14 @@ export default function Hero() {
   return (
     <section className="hero section-frame" id="home">
       <div className="hero-copy">
-        <p className="eyebrow">Guitarist • Pianist • Content Creator</p>
+        <p className="eyebrow">{t.hero.eyebrow}</p>
         <h1 className="hero-title">
-          <span>Play.</span>
-          <span>Create.</span>
-          <span>Inspire.</span>
+          <span>{t.hero.title1}</span>
+          <span>{t.hero.title2}</span>
+          <span>{t.hero.title3}</span>
         </h1>
         <span className="short-rule" aria-hidden="true" />
-        <p className="hero-description">
-          Suono chitarra classica, elettrica e pianoforte e condivido cover,
-          consigli e contenuti per altri appassionati di musica.
-        </p>
+        <p className="hero-description">{t.hero.description}</p>
         <a
           className="outline-button"
           href="#follow"
@@ -93,12 +92,12 @@ export default function Hero() {
             focusSocials();
           }}
         >
-          Scopri di più
+          {t.hero.cta}
           <ArrowRight className="button-arrow" />
         </a>
 
         <div className="follow-block" id="follow">
-          <p className="section-kicker">Follow me</p>
+          <p className="section-kicker">{t.hero.followKicker}</p>
           <div className="social-grid" ref={gridRef}>
             {socialLinks.map(({ label, Icon, href, guitar, piano }) => {
               if (href) {
@@ -133,7 +132,7 @@ export default function Hero() {
                     <span>{label}</span>
                   </button>
 
-                  <div className="social-choice" role="menu" aria-label={`${label}: scegli profilo`}>
+                  <div className="social-choice" role="menu" aria-label={t.hero.chooseProfile(label)}>
                     <a
                       className="social-choice__btn"
                       href={guitar}
@@ -143,7 +142,7 @@ export default function Hero() {
                       onClick={() => setOpenCard(null)}
                     >
                       <GuitarIcon className="social-choice__icon" />
-                      <span>Chitarra</span>
+                      <span>{t.hero.guitar}</span>
                     </a>
                     <a
                       className="social-choice__btn"
@@ -154,7 +153,7 @@ export default function Hero() {
                       onClick={() => setOpenCard(null)}
                     >
                       <PianoIcon className="social-choice__icon" />
-                      <span>Piano</span>
+                      <span>{t.hero.piano}</span>
                     </a>
                   </div>
                 </div>
@@ -164,7 +163,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hero-media" aria-label="Ritratto artista">
+      <div className="hero-media" aria-label={t.hero.portrait}>
         <div className="brush-layer" />
         <div className="portrait-layer" />
       </div>

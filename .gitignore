@@ -28,6 +28,7 @@ npm-debug.log*
 
 # Editor / OS junk
 .vscode/*
+.cursor/
 
 # Other
 IMG_TEST/
