@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import About from "./components/About";
 import Footer from "./components/Footer";
 import Gallery from "./components/Gallery";
@@ -38,6 +39,7 @@ export default function App() {
         initialVideo={initialVideo}
         initialFilter={galleryFilter}
       />
+      <Analytics />
     </div>
   );
 }
