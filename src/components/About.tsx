@@ -1,19 +1,18 @@
-import { ArrowRight, GuitarIcon, LightningIcon, PianoIcon, VideoIcon } from "./Icons";
-import { focusSocials } from "../lib/focusSocials";
+import { GuitarIcon, LightningIcon, PianoIcon, VideoIcon } from "./Icons";
+import type { GalleryFilter } from "../lib/youtube";
 
-const skillItems = [
-  { label: "Guitar", Icon: GuitarIcon },
-  { label: "Piano", Icon: PianoIcon },
-  { label: "Tips & Tricks", Icon: LightningIcon },
-  { label: "Video & Cover", Icon: VideoIcon },
+type AboutProps = {
+  onOpenGallery: (filter?: GalleryFilter) => void;
+};
+
+const skillItems: { label: string; Icon: typeof GuitarIcon; filter: GalleryFilter }[] = [
+  { label: "Guitar", Icon: GuitarIcon, filter: "Guitar" },
+  { label: "Piano", Icon: PianoIcon, filter: "Piano" },
+  { label: "Tips & Tricks", Icon: LightningIcon, filter: "Tutti" },
+  { label: "Video & Cover", Icon: VideoIcon, filter: "Tutti" },
 ];
 
-export default function About() {
-  const goToSocials = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    focusSocials();
-  };
-
+export default function About({ onOpenGallery }: AboutProps) {
   return (
     <section className="about-section" id="about">
       <div className="about-card">
@@ -26,15 +25,19 @@ export default function About() {
             elettrica e pianoforte e condivido cover, consigli e contenuti per
             altri appassionati di musica.
           </p>
-          <a className="outline-button outline-button--compact" href="#follow" onClick={goToSocials}>
-            Leggi di più
-            <ArrowRight className="button-arrow" />
-          </a>
         </div>
 
         <div className="skills-list" aria-label="Categorie contenuti">
-          {skillItems.map(({ label, Icon }) => (
-            <a className="skill-item" href="#follow" key={label} onClick={goToSocials}>
+          {skillItems.map(({ label, Icon, filter }) => (
+            <a
+              className="skill-item"
+              href="#gallery"
+              key={label}
+              onClick={(event) => {
+                event.preventDefault();
+                onOpenGallery(filter);
+              }}
+            >
               <Icon className="skill-icon" />
               <span>{label}</span>
             </a>

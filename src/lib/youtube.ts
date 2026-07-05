@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 export type Channel = "Piano" | "Guitar";
 
+export type GalleryFilter = "Tutti" | Channel;
+
 export type YtVideo = {
   id: string;
   title: string;

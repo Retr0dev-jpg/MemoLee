@@ -1,30 +1,32 @@
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, CloseIcon, PlayIcon, SearchIcon } from "./Icons";
-import { useYouTubeFeeds, type Channel, type YtVideo } from "../lib/youtube";
+import { useYouTubeFeeds, type GalleryFilter, type YtVideo } from "../lib/youtube";
 import { handleThumbError } from "./LatestContent";
 
 type GalleryProps = {
   open: boolean;
   onClose: () => void;
   initialVideo: YtVideo | null;
+  initialFilter: GalleryFilter;
 };
 
-type Filter = "Tutti" | Channel;
-
-const FILTERS: Filter[] = ["Tutti", "Piano", "Guitar"];
+const FILTERS: GalleryFilter[] = ["Tutti", "Piano", "Guitar"];
 
 const embedUrl = (id: string) =>
   `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
 
-export default function Gallery({ open, onClose, initialVideo }: GalleryProps) {
+export default function Gallery({ open, onClose, initialVideo, initialFilter }: GalleryProps) {
   const { videos, loading, error } = useYouTubeFeeds();
   const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState<Filter>("Tutti");
+  const [filter, setFilter] = useState<GalleryFilter>("Tutti");
   const [activeVideo, setActiveVideo] = useState<YtVideo | null>(null);
 
   useEffect(() => {
-    if (open) setActiveVideo(initialVideo ?? null);
-  }, [open, initialVideo]);
+    if (open) {
+      setActiveVideo(initialVideo ?? null);
+      setFilter(initialFilter);
+    }
+  }, [open, initialVideo, initialFilter]);
 
   useEffect(() => {
     if (!open) return;

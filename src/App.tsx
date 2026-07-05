@@ -5,14 +5,16 @@ import Gallery from "./components/Gallery";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import LatestContent from "./components/LatestContent";
-import type { YtVideo } from "./lib/youtube";
+import type { GalleryFilter, YtVideo } from "./lib/youtube";
 
 export default function App() {
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [initialVideo, setInitialVideo] = useState<YtVideo | null>(null);
+  const [galleryFilter, setGalleryFilter] = useState<GalleryFilter>("Tutti");
 
-  const openGallery = () => {
+  const openGallery = (filter: GalleryFilter = "Tutti") => {
     setInitialVideo(null);
+    setGalleryFilter(filter);
     setGalleryOpen(true);
   };
 
@@ -23,14 +25,19 @@ export default function App() {
 
   return (
     <div className="site-shell">
-      <Header onOpenGallery={openGallery} />
+      <Header onOpenGallery={() => openGallery()} />
       <main>
         <Hero />
-        <About />
-        <LatestContent onPlay={playVideo} onViewAll={openGallery} />
+        <About onOpenGallery={openGallery} />
+        <LatestContent onPlay={playVideo} onViewAll={() => openGallery()} />
       </main>
       <Footer />
-      <Gallery open={galleryOpen} onClose={() => setGalleryOpen(false)} initialVideo={initialVideo} />
+      <Gallery
+        open={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+        initialVideo={initialVideo}
+        initialFilter={galleryFilter}
+      />
     </div>
   );
 }
